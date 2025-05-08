@@ -12,11 +12,13 @@ export function useLoadSourcesRegistryInfo() {
     const contract = tc.open(SourcesRegistryContract.createFromAddress(address));
 
     const verifierRegistry = (await contract.getVerifierRegistryAddress()).toString();
+
     const deploymentCosts = await contract.getDeploymentCosts();
 
     const codeCellHash = Cell.fromBoc((await tc.getContractState(address)).code as Buffer)[0]
       .hash()
       .toString("base64");
+
     return {
       admin,
       verifierRegistry,

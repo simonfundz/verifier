@@ -16,9 +16,14 @@ export function useOverride() {
     (async () => {
       if (!walletAddress || !contractAddress) return;
       if (urlParams.get("override") !== null) {
+        if (import.meta.env.VITE_OVERRIDE === "true") {
+          setCanOverride(true);
+          return;
+        }
+
         const tc = await getClient();
         const admin = await getAdmin(Address.parse(window.sourcesRegistryAddress), tc);
-        if (admin === walletAddress) {
+        if (admin && Address.parse(walletAddress).equals(admin)) {
           setCanOverride(true);
           return;
         }

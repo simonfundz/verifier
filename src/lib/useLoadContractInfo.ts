@@ -26,7 +26,6 @@ export function useLoadContractInfo() {
   const { isLoading, error, data } = useQuery([contractAddress, "info"], async () => {
     if (!contractAddress) return null;
     const client = await getClient();
-
     const _address = Address.parse(contractAddress);
     let { code, data } = await client.getContractState(_address);
     let codeCell = Cell.fromBoc(code!)[0];
